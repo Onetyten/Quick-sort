@@ -1,0 +1,45 @@
+{
+  "name": "quick_sort",
+  "version": "0.0.0",
+  "private": true,
+  "homepage": ".",
+  "type": "module",
+  "main": "electron.js",
+  "scripts": {
+    "dev": "vite",
+    "electron": "electron .",
+    "electron:dev": "concurrently \"npm run dev\" \"npm run electron\"",
+    "build": "tsc -b && vite build",
+    "dist": "electron-builder",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.33.0",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12",
+    "electron-is-dev": "^3.0.1",
+    "eslint": "^9.33.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^7.1.2",
+    "concurrently": "^9.0.1"
+  },
+  "build": {
+    "appId": "io.github.onetyten.quick-sort",
+    "productName": "Quick Sort",
+    "directories": {
+      "output": "dist"
+    }
+  }
+}

@@ -5,7 +5,7 @@ const initialState={
         {name:'File Type',value:'type'},
         {name:'Date',value:'date'},
         {name:'Name',value:'name'},
-        {name:'Size',value:'Size'}
+        {name:'Size',value:'size'}
     ],
     optionIndex:0
 }

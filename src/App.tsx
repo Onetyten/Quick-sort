@@ -5,6 +5,7 @@ import NavBar from "./component/navBar"
 import SortButton from "./component/sortButton"
 import {store,persitor} from "../store"
 import { PersistGate } from "redux-persist/integration/react"
+import { ToastContainer} from 'react-toastify';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <SortButton/>
             </div>
           </div>
+          <ToastContainer position="top-center" hideProgressBar={true} className='font-jetbrains' closeOnClick={true} draggable={true} />
         </main>
       </PersistGate>
 

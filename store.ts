@@ -4,6 +4,7 @@ import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import cleanUpNameReducer from './state/cleanupName'
 import groupOptionReducer from './state/groupOption'
+import folderUrlReducer from './state/folderUrlSlice'
 
 
 const persistConfig = {
@@ -15,7 +16,8 @@ const persistConfig = {
 
 const reducer = combineReducers({
     cleanName:cleanUpNameReducer,
-    groupOption:groupOptionReducer
+    groupOption:groupOptionReducer,
+    folderUrl:folderUrlReducer
 })
 
 const persistedReducer = persistReducer(persistConfig,reducer)

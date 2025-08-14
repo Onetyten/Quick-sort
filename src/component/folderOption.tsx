@@ -6,6 +6,7 @@ import { toggleClean } from "../../state/cleanupName"
 import { IoMdArrowDropdown,IoMdArrowDropup  } from "react-icons/io";
 import { useState } from "react";
 import { setGroupIndex } from "../../state/groupOption";
+import { toast } from 'react-fox-toast';
 
 
 export default function FolderOption() {
@@ -17,9 +18,15 @@ export default function FolderOption() {
   
 
   function ToggleCleanName(){
+    if (!cleanUpName){
+      toast("Delete duplicate files selected",{className:'border-2', position:'top-center'})
+    }
+    else{
+      toast("Delete duplicate files deselected",{className:'border-2', position:'top-center'})
+    }
     dispatch(toggleClean())
-    console.log(cleanUpName)
   }
+
 
   return (
     <div className="flex justify-between w-full gap-2" >
@@ -53,8 +60,8 @@ export default function FolderOption() {
 
 
 
-        <div className={`w-full cursor-pointer select-none flex justify-center items-center p-3 rounded-md text-center border-2 ${cleanUpName?"text-background":" text-foreground bg-background"} `} onClick={()=>{ToggleCleanName()}}>
-            Cleanup name
+        <div className={`w-full cursor-pointer select-none flex justify-center items-center p-3 rounded-md text-center border-2 ${cleanUpName?"text-foreground bg-background":" text-background bg-foreground hover:bg-primary"} `} onClick={()=>{ToggleCleanName()}}>
+            Delete Duplicates
         </div>
 
             

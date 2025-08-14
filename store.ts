@@ -5,19 +5,25 @@ import storage from 'redux-persist/lib/storage'
 import cleanUpNameReducer from './state/cleanupName'
 import groupOptionReducer from './state/groupOption'
 import folderUrlReducer from './state/folderUrlSlice'
+import historyReducer from './state/logSlice'
+import sortingStateSlice from './state/sortingStateSlice'
+import darkModeReducer from './state/setDarkMode'
 
 
 const persistConfig = {
     key:'root',
     version:1,
     storage,
-    whitelist:[]
+    whitelist:['history','darkMode']
 }
 
 const reducer = combineReducers({
     cleanName:cleanUpNameReducer,
     groupOption:groupOptionReducer,
-    folderUrl:folderUrlReducer
+    folderUrl:folderUrlReducer,
+    history:historyReducer,
+    sortingState:sortingStateSlice,
+    darkMode:darkModeReducer
 })
 
 const persistedReducer = persistReducer(persistConfig,reducer)

@@ -4,8 +4,8 @@ const initialState={
     groupOptions:[
         {name:'File Type',value:'type'},
         {name:'Date',value:'date'},
-        {name:'Name',value:'name'},
-        {name:'Size',value:'size'}
+        {name:'Size',value:'size'},
+        {name:'None',value:'none'}
     ],
     optionIndex:0
 }
@@ -14,8 +14,8 @@ const groupOptionSlice = createSlice({
     name:'groupOption',
     initialState,
     reducers:{
-        setGroupIndex:(state,actions)=>{
-            state.optionIndex = actions.payload
+        setGroupIndex:(state,action)=>{
+            state.optionIndex = action.payload
         }
     }
 })

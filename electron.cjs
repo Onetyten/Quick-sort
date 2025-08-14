@@ -7,7 +7,6 @@ const electronReload = require("electron-reload");
 electronReload(__dirname);
 
 let mainWindow;
-
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -37,26 +36,33 @@ ipcMain.handle('select-folder',async()=>{
 
 // general sort manager
 async function HandleSort(event, folderUrl, groupOptions, optionIndex, cleanName) {
-    console.log("Main process logs", folderUrl, groupOptions, optionIndex, cleanName);
-    const selectedGrouping = groupOptions[optionIndex].value
-    let result;
+    const selectedGrouping = groupOptions[optionIndex].value;
+    console.log("Grouping", folderUrl, "by", selectedGrouping);
+    let log = [];
+    let folderNum = 0;
+    let name = `Grouped folder ${folderUrl} by ${selectedGrouping}`;
+    let result = { name, log, foldersCreated: folderNum };
+
+    if (cleanName) {
+        result.log = await RemoveDuplicates(folderUrl, log);
+    }
     switch (selectedGrouping) {
         case "date":
-            result = await GroupByDate(folderUrl);
-            break;
-        case "name":
-            result = await GroupByName(folderUrl);
+            result = await GroupByDate(folderUrl, result.log, result.foldersCreated, result.name);
             break;
         case "size":
-            result = await GroupBySize(folderUrl);
+            result = await GroupBySize(folderUrl, result.log, result.foldersCreated, result.name);
+            break;
+        case "type":
+            result = await GroupByType(folderUrl, result.log, result.foldersCreated, result.name);
             break;
         default:
-            result = await GroupByType(folderUrl);
+            break;
     }
     return result;
 }
 
-async function GroupByType(folderUrl) {
+async function GroupByType(folderUrl,log,folderNum,name) {
         try {
             const files = await fs.readdir(folderUrl)
             for (const file of files){
@@ -74,23 +80,22 @@ async function GroupByType(folderUrl) {
                 }
                 catch (error) {
                     await fs.mkdir(newFolderPath, { recursive: true });
+                    folderNum++
                 } 
                 const newPath = path.join(newFolderPath,file)
                 await fs.rename(oldPath,newPath)
+                log.push (`Grouped ${file} into ${folderName}`)
                 console.log("Group by type",folderUrl)
             }
-            return "Grouped by files"
         }
         catch (error) {
             console.error("Error during GroupByType:", error);
-            return `Error: ${error.message}`;
+            log.push (`Error while during Grouping by type`)
         }
+        return {name:name,log:log,foldersCreated:folderNum}
 }
 
-
-
-
-async function GroupByDate(folderUrl) {
+async function GroupByDate(folderUrl,log,folderNum,name) {
         try {
             const files = await fs.readdir(folderUrl)
             for (const file of files){
@@ -100,41 +105,118 @@ async function GroupByDate(folderUrl) {
                 if (!stat.isFile()){
                     continue
                 }
-                console.log(file,stat.birthtime)
-                // const fileExt = path.extname(file)
-                // const folderName =fileExt?`${fileExt.substring(1)} Folder`:"no extension Folder"
-                // const newFolderPath = path.join(folderUrl,folderName)
-                // try {
-                //     await fs.access(newFolderPath)
-                // }
-                // catch (error) {
-                //     await fs.mkdir(newFolderPath, { recursive: true });
-                // } 
-                // const newPath = path.join(newFolderPath,file)
-                // await fs.rename(oldPath,newPath)
-                // console.log("Group by type",folderUrl)
+                const createdDate = stat.birthtime
+                const monthYear = createdDate.toLocaleString("en-US",{
+                    month:"short",
+                    year:"numeric"
+                })
+                const newFolderPath = path.join(folderUrl,monthYear)
+                console.log(newFolderPath)
+                try {
+                    await fs.access(newFolderPath)
+                }
+                catch (error) {
+                    await fs.mkdir(newFolderPath, { recursive: true });
+                    folderNum++
+                } 
+                const newPath = path.join(newFolderPath,file)
+                await fs.rename(oldPath,newPath)
+                log.push (`Grouped ${file} into ${monthYear}`)
             }
-            return "Grouped by date"
         }
         catch (error) {
             console.error("Error during GroupByDate:", error);
-            return `Error: ${error.message}`;
+            log.push (`Error while during Grouping by date`)
         }
+        return {name:name,log:log,foldersCreated:folderNum}
 }
-
-async function GroupByName(folderUrl) {
-    console.log("Group by name",folderUrl)
-    return "Group by name"
+async function GroupBySize(folderUrl,log,folderNum,name) {
+    try {
+        const files = await fs.readdir(folderUrl)
+            for (const file of files){
+                const oldPath = path.join(folderUrl,file)
+                // ignore folder
+                const stat = await fs.stat(oldPath)
+                if (!stat.isFile()){
+                    continue
+                }
+                const fileSize = stat.size
+                const folderName = (() => {
+                switch (true) {
+                    case fileSize < 5 * 1024:
+                        return "Under 5KB";
+                    case fileSize < 500 * 1024:
+                        return "5KB-500KB";
+                    case fileSize < 1024 * 1024:
+                        return "500KB-1MB";
+                    case fileSize < 10 * 1024 * 1024:
+                        return "1MB-10MB";
+                    case fileSize < 100 * 1024 * 1024:
+                        return "10MB-100MB";
+                    case fileSize <500 * 1024 * 1024:
+                        return "100MB-500MB";
+                    case fileSize <1024 * 1024 * 1024:
+                        return "500MB-1GB";
+                    case fileSize <10 * 1024 * 1024 * 1024:
+                        return "1GB-10GB";
+                    default:
+                        return "Over 10GB";
+                }
+                })()
+                const newFolderPath = path.join(folderUrl,folderName)
+                console.log(newFolderPath)
+                try {
+                    await fs.access(newFolderPath)
+                }
+                catch (error) {
+                    await fs.mkdir(newFolderPath, { recursive: true });
+                    folderNum++
+                }
+                const newPath = path.join(newFolderPath,file)
+                await fs.rename(oldPath,newPath)
+                log.push (`Grouped ${file} into ${folderName}`)
+            }
+        }
+    catch (error) {
+        console.error("Error during GroupBySize", error);
+        log.push (`Error while Grouping by size`)
+    }
+    return {name:name,log:log,foldersCreated:folderNum}
 }
+async function RemoveDuplicates(folderUrl,log) {
+    const duplicateFileRegex = /^(.+?)(?:\s*(?:-?\s*\bcopy\b(?:\s*\d+)?(?:\s*\(\d+\))?|\((?:.*?\bcopy\b|\d+)\)))?\.[^.]+$/i
+    const fileInfoMap = new Map()
+    try {
+        const files = await fs.readdir(folderUrl)
+        for (const file of files){
+            const filePath = path.join(folderUrl,file)
+            const stat = await fs.stat(filePath);
+            const match = file.match(duplicateFileRegex)
+            if (!match) continue
+            const baseName = match[1];
+            const ext = path.extname(file);
+            const key = baseName+ext
 
-async function GroupBySize(folderUrl) {
-    console.log("Group by size",folderUrl)
-    return "Group by size"
+            if (fileInfoMap.has(key)){
+                const existing = fileInfoMap.get(key)
+                if (existing.size == stat.size){
+                    console.log(`Deleting duplicate file: ${file}`)
+                    log.push(`Deleting duplicate: ${file}`)
+                    await fs.unlink(filePath)
+                }
+            }
+            else{
+                fileInfoMap.set(key,{size:stat.size,path:filePath})
+            }
+
+        }
+    }
+    catch (error) {
+        console.error("Error while deleting duplicates:", error);
+        log.push(`Error while deleting duplicates`)
+    }
+    return log
 }
-
-
-
-
 
 ipcMain.handle("sort-folder", HandleSort); // <-- no parentheses here!
 

@@ -22,21 +22,36 @@
   --color-primary:var(--primary);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-drac-background: #282a36;
+  --color-drac-current-line: #44475a;
+  --color-drac-foreground: #f8f8f2;
+  --color-drac-comment: #6272a4;
+  --color-drac-cyan: #8be9fd;
+  --color-drac-green: #50fa7b;
+  --color-drac-orange: #ffb86c;
+  --color-drac-pink: #ff79c6;
+  --color-drac-purple: #bd93f9;
+  --color-drac-red: #ff5555;
+  --color-drac-yellow: #f1fa8c;
   --font-jetbrains:"JetBrains Mono", monospace;
 }
 
-body {
-  overflow: auto;
-  scrollbar-width: none; /* Firefox */
+
+
+
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }
 
-body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
+
+.show-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.show-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(156, 156, 156);
 }

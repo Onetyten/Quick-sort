@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain } = require("electron");
+const { app, BrowserWindow, dialog, ipcMain, Menu } = require("electron");
 const path = require("path");
 const fs = require("fs/promises");
 const isDev = require("electron-is-dev");
@@ -10,7 +10,8 @@ let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 600,
+    title:'Quicksort',
+    icon:path.join(__dirname,"Quick sort.ico"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
@@ -20,6 +21,7 @@ function createWindow() {
     ? "http://localhost:5173"
     : `file://${path.join(__dirname, "../dist/index.html")}`;
   mainWindow.loadURL(startUrl);
+  Menu.setApplicationMenu(null)
   mainWindow.on("closed", () => (mainWindow = null));
 }
 

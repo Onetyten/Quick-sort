@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 @import "tailwindcss";
-
+@custom-variant dark (&:where(.dark, .dark *));
 *,
 *::before,
 *::after {
@@ -33,6 +33,16 @@
   --color-drac-purple: #bd93f9;
   --color-drac-red: #ff5555;
   --color-drac-yellow: #f1fa8c;
+  --color-tokyo-primary: #7aa2f7;      /* Blue accent */
+  --color-tokyo-secondary: #bb9af7;    /* Purple accent */
+  --color-tokyo-accent: #7dcfff;       /* Cyan accent */
+  --color-tokyo-success: #9ece6a;      /* Green accent */
+  --color-tokyo-warning: #e0af68;      /* Yellow/Orange accent */
+  --color-tokyo-danger: #f7768e;       /* Red/Magenta accent */
+  --color-tokyo-background: #1a1b26;   /* Dark background */
+  --color-tokyo-foreground: #24283b;   /* Slightly lighter panel / cards */
+  --color-tokyo-text: #c0caf5;         /* Main text */
+  --color-tokyo-muted: #414868;     
   --font-jetbrains:"JetBrains Mono", monospace;
 }
 

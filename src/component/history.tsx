@@ -32,7 +32,7 @@ export default function History(props:propType) {
         <div className="flex-1" onClick={()=>{setShowSideBar(false)}}>
 
         </div>
-        <div className="h-full flex-3 sm:flex-2 lg:flex-1  border-l-2 bg-foreground overflow-y-scroll show-scrollbar ">
+        <div className="h-full flex-3 sm:flex-2 lg:flex-1  border-l-2 bg-foreground dark:bg-tokyo-background dark:text-primary overflow-y-scroll show-scrollbar ">
             <div className="flex justify-between p-4 items-center shadow-md h-16">
                 <div>
                     
@@ -40,7 +40,7 @@ export default function History(props:propType) {
                 <div>
                     History
                 </div>
-                <div onClick={clearHistory} className="border-2 p-2 px-4 select-none rounded-md hover:bg-primary cursor-pointer">
+                <div onClick={clearHistory} className="border-2 p-2 px-4 select-none dark:hover:text-tokyo-background rounded-md hover:bg-primary cursor-pointer">
                     Clear
                 </div>
             </div>

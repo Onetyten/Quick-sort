@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
-import FolderImg from "/images/folder.png"
 import type { RootState } from "../../store";
 import { useDispatch } from "react-redux";
 import { clearUrl, setUrl } from "../../state/folderUrlSlice";
-import AddFolderImg from "/images/addfolder.png"
 import { Digital } from "react-activity";
 import "react-activity/dist/library.css";
+import { FaFolderPlus,FaFolderOpen } from "react-icons/fa6";
 
 
 
@@ -27,10 +26,12 @@ export default function FileSelector() {
 
   return (
     <div>
-        <div onClick={HandleSelectPath} className="border-2 relative flex flex-col justify-center w-md items-center rounded-xl overflow-hidden">
-            
-            <img src={folderUrl && folderUrl.trim().length>0?FolderImg:AddFolderImg} className="object-contain select-none w-80 p-4 " alt="" />
-            <div className="bg-black w-full p-4 text-center text-white ">
+        <div onClick={HandleSelectPath} className="border-2 dark:border-primary relative flex flex-col justify-center w-sm sm:w-md items-center rounded-xl overflow-hidden">
+            <div className="text-[300px] p-6 text-background dark:text-primary">
+              {folderUrl && folderUrl.trim().length>0?<FaFolderOpen/>:<FaFolderPlus/>}
+            </div>
+        
+            <div className="bg-black dark:bg-primary dark:text-tokyo-background w-full p-4 text-center text-white ">
                 <p>
                 {folderUrl && folderUrl.trim().length>0?folderUrl:"Click to select a folder"}
                 </p>

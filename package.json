@@ -55,6 +55,25 @@
   "build": {
     "appId": "io.github.onetyten.quick-sort",
     "productName": "Quick Sort",
+    "files": [
+      "dist/**/*",
+      "electron.cjs",
+      "preload.js",
+      "package.json",
+      "QuickSort.ico",
+      "QuickSort.png"
+    ],
+    "mac": {
+      "icon": "QuickSort.png"
+    },
+    "win": {
+      "icon": "QuickSort.ico",
+      "target": ["nsis", "zip"]
+    },
+    "linux": {
+      "icon": "QuickSort.png",
+      "target": ["AppImage", "deb"]
+    },
     "directories": {
       "output": "dist"
     }

@@ -32,8 +32,10 @@ export default function HistoryItem(props:propType) {
             <div>
                 {item.log.map((item,index)=>{
                     return(
-                        <div key={index} className="w-full text-center hover:bg-primary bg-foreground p-4">
-                            <p>{item}</p>
+                        <div key={index} className="w-full flex justify-center text-center hover:bg-primary dark:hover:text-tokyo-background p-4">
+                           <div className="px-[5%]">
+                             <p>{item}</p>
+                           </div>
                         </div>
                     )
                 })}

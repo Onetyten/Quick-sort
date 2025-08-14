@@ -11,20 +11,21 @@ import { useState } from "react"
 
 function App() {
   const [showSideBar, setShowSideBar] = useState(false);
+  const [darkmode, setDarkmode] = useState(false);
 
   return (
     <Provider store={store}>
       <PersistGate persistor={persitor}>
-        <main className="bg-foreground text-background font-jetbrains w-full min-h-screen flex flex-col">
-          <NavBar setShowSideBar={setShowSideBar} showSideBar={showSideBar} />
+        <main className={`bg-foreground dark:bg-tokyo-background ${darkmode?"dark":""} text-background font-jetbrains w-full text-xs sm:text-base min-h-screen flex flex-col`}>
+          <NavBar setShowSideBar={setShowSideBar} showSideBar={showSideBar} darkmode={darkmode} setDarkmode={setDarkmode} />
 
           {showSideBar && (
             <div className="border-b border-gray-500">
               <History setShowSideBar={setShowSideBar} />
             </div>
           )}
-          <div className="flex-1 flex items-center justify-center">
-            <div className="w-md flex my-6 flex-col gap-4 h-full items-center justify-center">
+          <div className="flex-1 my-10 flex items-center justify-center">
+            <div className="w-sm sm:w-md flex my- flex-col gap-4 h-full items-center justify-center">
               <FileSelector />
               <FolderOption />
               <SortButton />

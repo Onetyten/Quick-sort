@@ -32,7 +32,7 @@ export default function FolderOption() {
     <div className="flex justify-between w-full gap-2" >
         {/* sort by */}
         
-          <div className="w-full cursor-pointer flex relative justify-center items-center p-3 rounded-md text-center border-2 text-background" onClick={()=>{setShowOption(!showOption)}}>
+          <div className="w-full dark:text-primary cursor-pointer flex relative justify-center items-center p-3 rounded-md text-center border-2 text-background" onClick={()=>{setShowOption(!showOption)}}>
             <OutsideClickHandler onOutsideClick={()=>{setShowOption(false)}}>
               <p className=" w-full flex select-none flex-col text-center h-full items-center justify-center">
                 Group By {groupOptions[groupIndex].name}
@@ -43,10 +43,10 @@ export default function FolderOption() {
               
               {showOption&&(
                 
-                  <div className="absolute  w-full bottom-14 shadow-md left-0 bg-fixed border-2 bg-foreground rounded-md flex flex-col ">
+                  <div className="absolute dark:bg-tokyo-background  w-full bottom-14 shadow-md left-0 bg-fixed border-2 bg-foreground rounded-md flex flex-col ">
                     {groupOptions.map((item,index)=>{
                       return(
-                        <p key={index} className="p-2 hover:bg-primary select-none" onClick={()=>{dispatch(setGroupIndex(index))}}>
+                        <p key={index} className="p-2 hover:bg-primary dark:hover:text-tokyo-background select-none" onClick={()=>{dispatch(setGroupIndex(index))}}>
                           {item.name}
                         </p>
                       )
@@ -60,7 +60,7 @@ export default function FolderOption() {
 
 
 
-        <div className={`w-full cursor-pointer select-none flex justify-center items-center p-3 rounded-md text-center border-2 ${cleanUpName?"text-foreground bg-background":" text-background bg-foreground hover:bg-primary"} `} onClick={()=>{ToggleCleanName()}}>
+        <div className={`w-full cursor-pointer select-none flex justify-center items-center p-3 rounded-md text-center border-2 ${cleanUpName?"text-foreground bg-background dark:bg-primary dark:border-primary dark:text-tokyo-background":" text-background dark:text-primary dark:hover:text-tokyo-background hover:bg-primary"} `} onClick={()=>{ToggleCleanName()}}>
             Delete Duplicates
         </div>
 

@@ -35,7 +35,7 @@ export default function SortButton() {
   }
 
   return (
-        <button onClick={HandleSort} className={`${folderUrl && folderUrl.trim().length>0?"bg-background hover:bg-gray-800 text-foreground":"bg-foreground hover:bg-primary text-background border-2 "}  select-none cursor-pointer  p-3 px-10 rounded-md`}>
+        <button onClick={HandleSort} className={`${folderUrl && folderUrl.trim().length>0?"bg-background dark:bg-primary dark:text-tokyo-background  hover:bg-gray-800 dark:hover:bg-teal-400 text-foreground":"hover:bg-primary text-background border-2 dark:text-primary dark:hover:text-tokyo-background "}  select-none cursor-pointer  p-3 px-10 rounded-md`}>
             Quick sort
         </button>
   )

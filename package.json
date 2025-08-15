@@ -2,6 +2,11 @@
   "name": "quick_sort",
   "version": "0.0.0",
   "private": true,
+  "description": "A minimalist file sorting desktop app",
+  "author": {
+    "name": "onetyten",
+    "email": "labaekaabdulrazaq@gmail.com"
+  },
   "homepage": ".",
   "type": "module",
   "main": "electron.cjs",
@@ -17,7 +22,6 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/vite": "^4.1.11",
-    "motion": "^12.23.12",
     "react": "^19.1.1",
     "react-activity": "^2.1.3",
     "react-dom": "^19.1.1",
@@ -28,7 +32,6 @@
     "react-tooltip": "^5.29.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-    "redux-toolkit": "^1.1.2",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
@@ -42,8 +45,6 @@
     "concurrently": "^9.0.1",
     "electron": "^37.2.6",
     "electron-builder": "^26.0.12",
-    "electron-is-dev": "^3.0.1",
-    "electron-reload": "^2.0.0-alpha.1",
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
@@ -54,28 +55,41 @@
   },
   "build": {
     "appId": "io.github.onetyten.quick-sort",
-    "productName": "Quick Sort",
+    "productName": "Quicksort",
+    "compression": "maximum",
+    "removePackageScripts": true,
+    "removePackageKeywords": true,
+    "buildVersion": "1",
+    "asar": true,
     "files": [
       "dist/**/*",
       "electron.cjs",
       "preload.js",
       "package.json",
-      "QuickSort.ico",
-      "QuickSort.png"
+      "Quicksort.ico",
+      "Quicksort.png"
     ],
-    "mac": {
-      "icon": "QuickSort.png"
-    },
     "win": {
-      "icon": "QuickSort.ico",
-      "target": ["nsis", "zip"]
+      "icon": "Quicksort.ico",
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "compression": "maximum"
     },
     "linux": {
-      "icon": "QuickSort.png",
-      "target": ["AppImage", "deb"]
+      "icon": "Quicksort.png",
+      "category": "Utility",
+      "target": [
+        { "target": "AppImage", "arch": ["x64"] },
+        { "target": "deb", "arch": ["x64"] }
+      ],
+      "compression": "maximum"
+    },
+    "deb": {
+      "compression": "xz"
     },
     "directories": {
-      "output": "dist"
-    }
+      "output": "release",
+      "buildResources": "build"
+    },
+    "electronVersion": "37.2.6"
   }
 }
